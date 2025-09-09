@@ -1,6 +1,6 @@
 const  mongoose = require('mongoose');
 
-// Define nested schemas to maintain structure
+// Define nested schemas to maintain structure / Readbility
 
 const QuizQuestionSchema = new mongoose.Schema({
     question: { type: String, required: true },
