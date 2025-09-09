@@ -4,7 +4,7 @@ const Course = require('../models/course'); // Import the Mongoose model
 const { GoogleGenAI} = require("@google/genai");
 require('dotenv').config();
 const router = express.Router();
-
+const {courseGenerationSchema} = require('../schema/courseGenSchema');
 
 router.get("/api/courses", async (req, res) => {
   try {

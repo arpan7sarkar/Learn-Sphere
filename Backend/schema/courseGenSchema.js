@@ -1,4 +1,4 @@
-const { Type } = require("@google/genai");
+const { Type } = require('@google/genai');
 
 const courseGenerationSchema = {
   type: Type.OBJECT,

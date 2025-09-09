@@ -3,16 +3,13 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
 const axios = require("axios");
-const app = express();
 const { connectDB } = require("./config/db");
 const { router } = require("./routes/index.route");
 
+const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use("/api", router);
-
+app.use("/", router);
 
 
 //connecting with the db and starting server
