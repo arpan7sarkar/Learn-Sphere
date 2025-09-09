@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const XP = require('../models/xp.model'); // Assuming the model is in ../models/xp.model.js
+const XP = require('../models/xp.js'); // Assuming the model is in ../models/xp.model.js
 
 router.get('api/xp/:userId', async (req, res) => {
     try {
