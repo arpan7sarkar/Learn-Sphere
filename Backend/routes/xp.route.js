@@ -50,7 +50,7 @@ router.post('/api/xp/add', async (req, res) => {
     }
 });
 
-app.post('/api/xp/achievement', async (req, res) => {
+router.post('/api/xp/achievement', async (req, res) => {
     try {
         const { userId, name, description, xpReward } = req.body;
         
@@ -157,4 +157,4 @@ router.post('/api/quiz/complete', async (req, res) => {
     }
 });
 
-module.exports = {router};
+module.exports = router;

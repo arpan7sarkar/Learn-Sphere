@@ -1,8 +1,11 @@
-const express = require("express");
+const express = require('express');
+const { jsonrepair } = require('jsonrepair');
+const Course = require('../models/course'); // Import the Mongoose model
+const { GoogleGenAI} = require("@google/genai");
+require('dotenv').config();
 const router = express.Router();
-const Course = require("../models/course");
-const courseGenerationSchema = require("../schema/courseGenSchema");
-const { GoogleGenAI, Type, Chat, GenerateContentResponse } = require("@google/genai");
+
+
 router.get("/api/courses", async (req, res) => {
   try {
     const { userId } = req.query;
@@ -195,4 +198,4 @@ router.delete('/api/courses/:courseId', async (req, res) => {
 });
 
 
-module.exports = { router };
+module.exports = router;

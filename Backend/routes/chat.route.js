@@ -2,6 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
+
+
 router.post('/api/chat', async (req, res) => {
     const { message, history } = req.body;
     if (!message) {
@@ -30,4 +32,4 @@ router.post('/api/chat', async (req, res) => {
     }
 });
 
-module.exports = {router};
+module.exports = router;
