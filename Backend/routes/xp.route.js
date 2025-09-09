@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const XP = require('../models/xp.model'); // Assuming the model is in ../models/xp.model.js
 
-router.get('/:userId', async (req, res) => {
+router.get('api/xp/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
         let userXP = await XP.findOne({ userId });
@@ -20,7 +20,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-router.post('/add', async (req, res) => {
+router.post('/api/xp/add', async (req, res) => {
     try {
         const { userId, amount, source, sourceId } = req.body;
         
@@ -112,4 +112,49 @@ router.get('/api/xp/rank/:userId', async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch user rank.' });
     }
 });
+
+router.post('/api/quiz/complete', async (req, res) => {
+    try {
+        const { userId, quizId, lessonId, score, totalQuestions, xpReward = 15 } = req.body;
+        
+        if (!userId || !quizId || score === undefined || !totalQuestions) {
+            return res.status(400).json({ message: 'userId, quizId, score, and totalQuestions are required.' });
+        }
+        
+        // Calculate XP based on score (bonus for perfect score)
+        const percentage = (score / totalQuestions) * 100;
+        let finalXP = xpReward;
+        
+        if (percentage === 100) {
+            finalXP += 10; // Perfect score bonus
+        } else if (percentage >= 80) {
+            finalXP += 5; // Good score bonus
+        }
+        
+        // Add XP for quiz completion
+        let userXP = await XP.findOne({ userId });
+        if (!userXP) {
+            userXP = new XP({ userId });
+        }
+        
+        const result = userXP.addXP(finalXP, 'quiz_completion', quizId);
+        await userXP.save();
+        
+        res.status(200).json({
+            message: 'Quiz completed successfully',
+            score,
+            totalQuestions,
+            percentage: Math.round(percentage),
+            xpEarned: finalXP,
+            leveledUp: result.leveledUp,
+            newLevel: result.newLevel,
+            totalXP: userXP.totalXP,
+            currentLevel: userXP.currentLevel
+        });
+    } catch (error) {
+        console.error('Error completing quiz:', error.message);
+        res.status(500).json({ message: 'Failed to complete quiz.' });
+    }
+});
+
 module.exports = {router};
