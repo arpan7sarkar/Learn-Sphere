@@ -290,10 +290,10 @@ const LearnSphereApp: React.FC = () => {
             <div className="fixed bottom-5 right-5 z-40">
                 <button 
                     onClick={() => setIsChatOpen(!isChatOpen)} 
-                    className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-110" 
+                    className=" bg-transparent text-white rounded-full h-16 w-16 flex items-center justify-center text-2xl hover:bg-transparent transition-all transform hover:scale-110 duration-300 " 
                     aria-label="Toggle AI Tutor"
                 >
-                    🤖
+                    <img src="   https://cdn-icons-png.flaticon.com/512/5292/5292531.png " alt="" className='w-12 h-12'/>
                 </button>
             </div>
             
