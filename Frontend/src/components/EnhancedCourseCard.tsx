@@ -62,7 +62,7 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
 
   return (
     <div 
-      className="bg-gray-800 rounded-xl shadow-lg flex flex-col overflow-hidden relative transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-gray-700 hover:border-indigo-500 group"
+      className="bg-slate-900 rounded-xl shadow-lg flex flex-col overflow-hidden relative transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-purple-500/30 hover:border-purple-500 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -85,16 +85,16 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
 
       {/* Progress Badge (if started) */}
       {progressPercentage > 0 && (
-        <div className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
+        <div className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
           {Math.round(progressPercentage)}% Complete
         </div>
       )}
 
       {/* Image Container */}
-      <div className="relative w-full h-48 bg-gray-700 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
         {isImageLoading ? (
-          <div className="w-full h-full bg-gray-600 animate-pulse flex items-center justify-center">
-            <div className="text-gray-400">Loading...</div>
+          <div className="w-full h-full bg-slate-700 animate-pulse flex items-center justify-center">
+            <div className="text-slate-300">Loading...</div>
           </div>
         ) : (
           <>
@@ -116,9 +116,9 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
                 </div>
                 {progressPercentage > 0 && (
                   <div className="mt-2">
-                    <div className="w-full bg-gray-600 rounded-full h-2">
+                    <div className="w-full bg-slate-700 rounded-full h-2">
                       <div 
-                        className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${progressPercentage}%` }}
                       />
                     </div>
@@ -133,10 +133,10 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
       {/* Content */}
       <div className="p-6 flex flex-col flex-grow">
         <h3 className="text-xl font-bold text-white mb-2">{course.title}</h3>
-        <p className="text-gray-400 mb-4 flex-grow line-clamp-3">{course.description}</p>
+        <p className="text-slate-300 mb-4 flex-grow line-clamp-3">{course.description}</p>
         
         {/* Course Stats */}
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+        <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
           <div className="flex items-center space-x-4">
             <span className="flex items-center space-x-1">
               <span>📚</span>
@@ -153,12 +153,12 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
         {progressPercentage > 0 && (
           <div className="mb-4">
             <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-gray-400">Progress</span>
-              <span className="text-xs text-gray-400">{completedLessons}/{totalLessons}</span>
+              <span className="text-xs text-slate-400">Progress</span>
+              <span className="text-xs text-slate-400">{completedLessons}/{totalLessons}</span>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2">
+            <div className="w-full bg-slate-800 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
@@ -170,8 +170,8 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
           onClick={() => onStartLearning(course.id)} 
           className={`w-full font-bold py-3 px-4 rounded-lg transition-all duration-300 transform ${
             progressPercentage > 0
-              ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white'
-              : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+              ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
+              : 'bg-purple-600 hover:bg-purple-700 text-white'
           } ${isHovered ? 'scale-105' : 'scale-100'}`}
         >
           {progressPercentage > 0 ? 'Continue Learning' : 'Start Learning'}
@@ -182,15 +182,15 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
       <div className={`absolute inset-0 rounded-xl transition-opacity duration-300 pointer-events-none ${
         isHovered ? 'opacity-100' : 'opacity-0'
       }`}>
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 opacity-20 blur-xl" />
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 opacity-20 blur-xl" />
       </div>
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-30 rounded-xl">
-          <div className="bg-gray-800 p-6 rounded-lg border border-red-500 max-w-sm">
+          <div className="bg-slate-900 p-6 rounded-lg border border-red-500 max-w-sm">
             <h3 className="text-white font-bold text-lg mb-2">Delete Course?</h3>
-            <p className="text-gray-300 text-sm mb-4">
+            <p className="text-slate-300 text-sm mb-4">
               Are you sure you want to delete "{course.title}"? This action cannot be undone.
             </p>
             <div className="flex space-x-3">
@@ -202,7 +202,7 @@ export const EnhancedCourseCard: React.FC<EnhancedCourseCardProps> = ({
               </button>
               <button
                 onClick={handleCancelDelete}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
