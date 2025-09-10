@@ -10,8 +10,6 @@ router.post('/chat', async (req, res) => {
         return res.status(400).json({ message: 'Message is required.' });
     }
 
-    // It's good practice to load environment variables at the start of your app, e.g., in your main server file.
-
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     if (!GEMINI_API_KEY) {
         return res.status(500).json({ message: 'API Key not configured on server.' });
@@ -31,5 +29,4 @@ router.post('/chat', async (req, res) => {
         res.status(500).json({ message: 'Failed to get a response from the AI tutor.' });
     }
 });
-
 module.exports = router;
