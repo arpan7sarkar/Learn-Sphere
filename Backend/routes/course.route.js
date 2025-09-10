@@ -42,7 +42,7 @@ router.post('/generate-course', async (req, res) => {
      const prompt = `
       You are an expert instructional designer. A user wants a course on the topic: "${topic}" at a "${level}" level.
       Generate a comprehensive, structured course plan tailored to that difficulty level. Add quizzes to each lesson and include a relevant royalty-free image URL based on the specific ${topic}.
-      The output MUST be a single, valid JSON object and nothing else.
+      The output MUST be a single, valid JSON object and nothing else.You must have to create at least 5+ chapters and each chapter must have at least 3 lessons.
 
       The JSON object must have the following structure:
       {
@@ -74,10 +74,10 @@ router.post('/generate-course', async (req, res) => {
         ]
       }
 
-      Requirements:
-      - At least 5+ chapters.
+      MUST FOllow these guidelines:
+      - At least 5-7 chapters.
       - Each chapter must have at least 4+ lessons.
-      - Each lesson must have at least 150+ words of HTML content.
+      - Each lesson must have at least 200+ words of HTML content.
       - Each lesson must include a quiz with 3-5 multiple-choice questions.
       - The imageUrl should be a relevant royalty-free image link from Unsplash, using the course title as the search keyword.
     `;
