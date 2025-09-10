@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, X } from 'lucide-react';
 import axios from 'axios';
 import type { ChatMessage } from './index';
+import API_ENDPOINTS from '../config/api';
 
 interface ChatbotProps {
   onClose: () => void;
@@ -27,7 +28,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
     setIsLoading(true); 
     
     try { 
-      const response = await axios.post<{ reply: string }>('http://localhost:5001/api/chat', { 
+      const response = await axios.post<{ reply: string }>(API_ENDPOINTS.CHAT, { 
         message: input, 
         history: messages 
       }); 

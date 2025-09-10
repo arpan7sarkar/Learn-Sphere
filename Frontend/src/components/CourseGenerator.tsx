@@ -3,6 +3,7 @@ import { Sprout, Rocket, Zap, Sparkles, BookOpen, Target, Star, Brain, Graduatio
 import type { Course } from './index';
 import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
+import API_ENDPOINTS from '../config/api';
 
 interface CourseGeneratorProps {
   onCourseCreated: (course: Course) => void;
@@ -22,7 +23,7 @@ const CourseGenerator: React.FC<CourseGeneratorProps> = ({ onCourseCreated }) =>
         setIsLoading(true);
         setError(null);
         try {
-            const response = await axios.post<Course>('http://localhost:5001/api/generate-course', { 
+            const response = await axios.post<Course>(API_ENDPOINTS.GENERATE_COURSE, { 
                 topic, 
                 level,
                 userId: clerkUser.id 

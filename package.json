@@ -1,0 +1,27 @@
+{
+  "name": "learn-sphere",
+  "version": "1.0.0",
+  "description": "LearnSphere - AI-Powered Learning Platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd Frontend && npm run dev",
+    "build": "cd Frontend && npm run build",
+    "start": "cd Frontend && npm run preview",
+    "install-deps": "cd Frontend && npm install && cd ../Backend && npm install"
+  },
+  "keywords": ["learning", "ai", "education", "courses"],
+  "author": "Arpan Sarkar",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@google/genai": "^1.18.0",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "jsonrepair": "^3.13.0",
+    "mongoose": "^8.18.1"
+  }
+}

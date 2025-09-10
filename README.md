@@ -36,9 +36,9 @@
 
 ## 🎬 Demo
 
-<!-- [<img src="https://source.unsplash.com/800x450/?online,course,dashboard,dark,mode" alt="Learn-Sphere Dashboard" width="100%">](https://your-demo-link.com) -->
+[<img src="https://source.unsplash.com/800x450/?online,course,dashboard,dark,mode" alt="Learn-Sphere Dashboard" width="100%">](https://your-demo-link.com)
 
-<!-- *Click the image above to see Learn-Sphere in action!* -->
+*Click the image above to see Learn-Sphere in action!*
 
 ---
 
@@ -48,11 +48,12 @@
 
 | Feature | Description |
 |---------|-------------|
-| **🤖 AI Course Generation** | Generate complete courses with chapters, lessons, and quizzes using Google Gemini AI |
-| **📚 Comprehensive Content** | Each course includes detailed HTML content, interactive quizzes, and multimedia resources |
-| **🎮 Gamification System** | Earn XP points, track progress, and unlock achievements as you learn |
-| **💬 AI Tutor Chat** | Get instant help and explanations from your personal AI learning assistant |
-| **📱 Responsive Design** | Perfect experience across desktop, tablet, and mobile devices |
+| 🧠 **AI Course Generation** | Generate comprehensive courses on any topic with structured chapters and lessons |
+| 🎮 **Gamified Learning** | Earn XP points, level up, and unlock achievements as you progress |
+| 💬 **AI Tutor Chat** | Get instant help from an intelligent AI assistant |
+| 📊 **Progress Tracking** | Monitor your learning journey with detailed progress analytics |
+| 🔐 **Secure Authentication** | User management powered by Clerk |
+| 📱 **Responsive Design** | Beautiful UI that works on all devices |
 <!-- | **🌙 Dark/Light Mode** | Choose your preferred theme for comfortable learning | -->
 | **🔒 User Authentication** | Secure login and user management with Clerk |
 | **📊 Progress Analytics** | Detailed insights into your learning journey and achievements |

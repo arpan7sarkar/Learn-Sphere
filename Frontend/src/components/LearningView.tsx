@@ -3,6 +3,7 @@ import { Lock, CheckCircle, PartyPopper } from 'lucide-react';
 import type { Course, QuizResult, QuizProgress } from './index';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
+import API_ENDPOINTS from '../config/api';
 
 interface QuizCompletionResponse {
   message: string;
@@ -82,7 +83,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
         quiz.questions.forEach((q, i) => { if (answers[i] === q.correctAnswer) { correct++; } });
         
         try {
-            const response = await axios.post<QuizCompletionResponse>('http://localhost:5001/api/quiz/complete', {
+            const response = await axios.post<QuizCompletionResponse>(API_ENDPOINTS.COMPLETE_QUIZ, {
                 userId: clerkUser.id,
                 courseId: course.id,
                 chapterIndex: activeLesson.chap,
@@ -130,7 +131,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
         
         setIsRegeneratingQuiz(true);
         try {
-            await axios.post('http://localhost:5001/api/quiz/regenerate', {
+            await axios.post(API_ENDPOINTS.REGENERATE_QUIZ, {
                 userId: clerkUser.id,
                 courseId: course.id,
                 chapterIndex: activeLesson.chap,
