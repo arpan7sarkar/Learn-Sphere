@@ -75,9 +75,9 @@ router.post('/generate-course', async (req, res) => {
       }
 
       Requirements:
-      - At least 5 chapters.
-      - Each chapter must have at least 3 lessons.
-      - Each lesson must have at least 150 words of HTML content.
+      - At least 5+ chapters.
+      - Each chapter must have at least 4+ lessons.
+      - Each lesson must have at least 150+ words of HTML content.
       - Each lesson must include a quiz with 3-5 multiple-choice questions.
       - The imageUrl should be a relevant royalty-free image link from Unsplash, using the course title as the search keyword.
     `;
