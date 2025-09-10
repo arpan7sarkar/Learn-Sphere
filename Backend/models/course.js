@@ -24,3 +24,17 @@ const ChapterSchema = new mongoose.Schema({
     title: { type: String, required: true },
     lessons: [LessonSchema],
 }, { _id: false });
+
+// Root schema for Course
+const CourseSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    level: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    chapters: [ChapterSchema],
+    ownerId: { type: String, required: true },
+}, { timestamps: true });
+
+const Course = mongoose.model('Course', CourseSchema);
+
+module.exports = Course;

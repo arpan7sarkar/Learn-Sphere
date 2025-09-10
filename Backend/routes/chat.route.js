@@ -1,10 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
+require('dotenv').config();
 
 
-
-router.post('/api/chat', async (req, res) => {
+router.post('/chat', async (req, res) => {
     const { message, history } = req.body;
     if (!message) {
         return res.status(400).json({ message: 'Message is required.' });

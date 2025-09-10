@@ -1,12 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const { jsonrepair } = require('jsonrepair');
 const Course = require('../models/course'); // Import the Mongoose model
-const { GoogleGenAI} = require("@google/genai");
+const { GoogleGenAI, Type, Chat, GenerateContentResponse } = require("@google/genai");
+const router= express.Router();
 require('dotenv').config();
-const router = express.Router();
-const {courseGenerationSchema} = require('../schema/courseGenSchema');
+const courseGenerationSchema = require('../schema/courseGenSchema');
 
-router.get("/api/courses", async (req, res) => {
+router.get("/courses", async (req, res) => {
   try {
     const { userId } = req.query;
     if (!userId) {
@@ -24,7 +26,7 @@ router.get("/api/courses", async (req, res) => {
   }
 });
 
-router.post('/api/generate-course', async (req, res) => {
+router.post('/generate-course', async (req, res) => {
     const { topic, level, userId } = req.body;
     console.log(`POST /api/generate-course route hit with topic: "${topic}", level: "${level}", userId: "${userId}"`);
 
@@ -171,7 +173,7 @@ router.post('/api/generate-course', async (req, res) => {
     }
 });
 
-router.delete('/api/courses/:courseId', async (req, res) => {
+router.delete('/courses/:courseId', async (req, res) => {
     try {
         const { courseId } = req.params;
         const { userId } = req.query;

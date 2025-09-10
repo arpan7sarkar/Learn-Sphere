@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const XP = require('../models/xp.js'); // Assuming the model is in ../models/xp.model.js
 
-router.get('api/xp/:userId', async (req, res) => {
+router.get('/xp/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
         let userXP = await XP.findOne({ userId });
@@ -20,7 +20,7 @@ router.get('api/xp/:userId', async (req, res) => {
     }
 });
 
-router.post('/api/xp/add', async (req, res) => {
+router.post('/xp/add', async (req, res) => {
     try {
         const { userId, amount, source, sourceId } = req.body;
         
@@ -50,7 +50,7 @@ router.post('/api/xp/add', async (req, res) => {
     }
 });
 
-router.post('/api/xp/achievement', async (req, res) => {
+router.post('/xp/achievement', async (req, res) => {
     try {
         const { userId, name, description, xpReward } = req.body;
         
@@ -84,7 +84,7 @@ router.post('/api/xp/achievement', async (req, res) => {
 });
 
 // Get leaderboard
-router.get('/api/leaderboard', async (req, res) => {
+router.get('/leaderboard', async (req, res) => {
     try {
         const { limit = 10 } = req.query;
         const leaderboard = await XP.getLeaderboard(parseInt(limit));
@@ -97,7 +97,7 @@ router.get('/api/leaderboard', async (req, res) => {
 });
 
 // Get user rank
-router.get('/api/xp/rank/:userId', async (req, res) => {
+router.get('/xp/rank/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
         const rank = await XP.getUserRank(userId);
@@ -113,7 +113,7 @@ router.get('/api/xp/rank/:userId', async (req, res) => {
     }
 });
 
-router.post('/api/quiz/complete', async (req, res) => {
+router.post('/quiz/complete', async (req, res) => {
     try {
         const { userId, quizId, lessonId, score, totalQuestions, xpReward = 15 } = req.body;
         
