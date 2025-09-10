@@ -17,7 +17,7 @@ app.use("/api", router);
 
 //connecting with the db and starting server
 connectDB().then(() => {
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 5001;
   console.log("MongoDb setup done");
   app.listen(port, () => {
     console.log(

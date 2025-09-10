@@ -205,16 +205,6 @@ const LearnSphereApp: React.FC = () => {
         if (quizResult) {
             setQuizProgress(null);
             
-            // Add XP for quiz completion via backend
-            await axios.post('http://localhost:5001/api/quiz/complete', {
-                userId: clerkUser.id,
-                quizId: `${courseId}_${chapterIndex}_${lessonIndex}`,
-                lessonId: `${courseId}_${chapterIndex}_${lessonIndex}`,
-                score: quizResult.correct,
-                totalQuestions: quizResult.total,
-                xpReward: 15
-            });
-            
             // Update quiz history
             setUser((prevUser: User) => ({
                 ...prevUser,
@@ -232,6 +222,8 @@ const LearnSphereApp: React.FC = () => {
         
         // Reload user XP data to get updated values
         await loadUserXP(clerkUser.id);
+        // Refresh courses to sync unlock/completion changes from backend
+        await fetchCourses();
     }, [clerkUser?.id, loadUserXP]);
 
     const handleUpdateQuizProgress = useCallback((progress: QuizProgress) => { setQuizProgress(progress); }, []);

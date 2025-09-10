@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const XP = require('../models/xp.js'); // Assuming the model is in ../models/xp.model.js
+const Course = require('../models/course');
+const axios = require('axios');
+const { jsonrepair } = require('jsonrepair');
 
 router.get('/xp/:userId', async (req, res) => {
     try {
@@ -142,6 +145,10 @@ router.post('/quiz/complete', async (req, res) => {
             
             // Check and update chapter completion
             const chapterCompleted = course.updateChapterCompletion(chapterIndex);
+            // If the chapter is completed, unlock the next chapter (if any)
+            if (chapterCompleted && chapterIndex + 1 < course.chapters.length) {
+                course.chapters[chapterIndex + 1].unlocked = true;
+            }
             
             // Add XP for quiz completion
             let userXP = await XP.findOne({ userId });

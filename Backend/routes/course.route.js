@@ -24,7 +24,22 @@ router.get("/courses", async (req, res) => {
     const courses = await Course.find({ ownerId: userId }).sort({
       createdAt: -1,
     });
-    res.status(200).json(courses);
+
+    // Include computed unlock status for each chapter and lesson
+    const coursesWithUnlocks = courses.map((courseDoc) => {
+      const course = courseDoc.toObject();
+      course.chapters = course.chapters.map((chapter, chapterIndex) => ({
+        ...chapter,
+        unlocked: courseDoc.isChapterUnlocked(chapterIndex),
+        lessons: chapter.lessons.map((lesson, lessonIndex) => ({
+          ...lesson,
+          unlocked: courseDoc.isLessonUnlocked(chapterIndex, lessonIndex),
+        })),
+      }));
+      return course;
+    });
+
+    res.status(200).json(coursesWithUnlocks);
   } catch (error) {
     console.error("Error fetching courses:", error.message);
     res.status(500).json({ message: "Failed to fetch courses." });
@@ -186,6 +201,13 @@ router.post("/generate-course", async (req, res) => {
 
     // Add ownerId to the course data
     generatedCourseData.ownerId = userId;
+    // Ensure first chapter starts unlocked
+    if (Array.isArray(generatedCourseData.chapters) && generatedCourseData.chapters.length > 0) {
+      generatedCourseData.chapters = generatedCourseData.chapters.map((ch, idx) => ({
+        ...ch,
+        unlocked: idx === 0 ? true : false,
+      }));
+    }
 
     const newCourse = new Course(generatedCourseData);
     const savedCourse = await newCourse.save();

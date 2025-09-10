@@ -40,6 +40,20 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
 
     const currentLesson = activeLesson ? course.chapters[activeLesson.chap].lessons[activeLesson.less] : null;
 
+    // Derived unlock helpers
+    const isChapterUnlocked = (chapIdx: number) => {
+        // If explicitly locked flag is false, it's locked; otherwise first chapter unlocked by default
+        if (chapIdx === 0) return true;
+        return course.chapters[chapIdx].unlocked !== false && course.chapters[chapIdx - 1].completed === true ? true : course.chapters[chapIdx].unlocked === true;
+    };
+    const isLessonUnlockedFn = (chapIdx: number, lessIdx: number) => {
+        if (!isChapterUnlocked(chapIdx)) return false;
+        if (lessIdx === 0) return true;
+        const prev = course.chapters[chapIdx].lessons[lessIdx - 1];
+        // If previous lesson had a quiz, require quizPassed; otherwise require completed
+        return prev.quiz ? !!prev.quizPassed : !!prev.completed;
+    };
+
     useEffect(() => {
         setIsQuizSubmitted(false);
         setQuizResult(null);
@@ -59,12 +73,13 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
     };
     
     const handleSubmitQuiz = async () => {
-        if (!activeLesson || !currentLesson || !currentLesson.quiz || !quizProgress || !clerkUser) return;
+        if (!activeLesson || !currentLesson || !currentLesson.quiz || !clerkUser) return;
         
         setIsSubmittingQuiz(true);
         const quiz = currentLesson.quiz;
         let correct = 0;
-        quiz.questions.forEach((q, i) => { if (quizProgress.answers[i] === q.correctAnswer) { correct++; } });
+        const answers = quizProgress?.answers || {};
+        quiz.questions.forEach((q, i) => { if (answers[i] === q.correctAnswer) { correct++; } });
         
         try {
             const response = await axios.post<QuizCompletionResponse>('http://localhost:5001/api/quiz/complete', {
@@ -164,7 +179,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                 </h3>
                 <div className="space-y-2 max-h-[70vh] overflow-y-auto pr-2">
                     {course.chapters.map((chap, chapIdx) => {
-                        const isChapterLocked = chap.unlocked === false;
+                        const isChapterLocked = !isChapterUnlocked(chapIdx);
                         const isChapterCompleted = chap.completed;
                         
                         return (
@@ -193,7 +208,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                             )}
                             <ul className="space-y-1 pl-7">
                                 {chap.lessons.map((less, lessIdx) => {
-                                    const isLocked = less.unlocked === false;
+                                    const isLocked = !isLessonUnlockedFn(chapIdx, lessIdx);
                                     const isActive = activeLesson?.chap === chapIdx && activeLesson?.less === lessIdx;
                                     
                                     return (
@@ -279,7 +294,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                         ></div>
                         
                         {/* Locked Lesson Message */}
-                        {currentLesson.unlocked === false && (
+                        {!isLessonUnlockedFn(activeLesson!.chap, activeLesson!.less) && (
                             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mt-8">
                                 <div className="flex items-center gap-3 mb-4">
                                     <div className="bg-yellow-100 p-2 rounded-lg">
@@ -290,13 +305,13 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                                     <h3 className="text-xl font-bold text-yellow-800">Lesson Locked</h3>
                                 </div>
                                 <p className="text-yellow-700 mb-4">
-                                    You need to complete the previous lesson with at least 75% quiz score to unlock this lesson.
+                                    You need to complete the previous lesson with at least 50% quiz score to unlock this lesson.
                                 </p>
                                 <div className="bg-white p-4 rounded-lg border border-yellow-200">
                                     <h4 className="font-semibold text-yellow-800 mb-2">Requirements:</h4>
                                     <ul className="text-yellow-700 space-y-1">
                                         <li>• Complete the previous lesson</li>
-                                        <li>• Score 75% or higher on the quiz</li>
+                                        <li>• Score 50% or higher on the quiz</li>
                                         <li>• Then this lesson will automatically unlock</li>
                                     </ul>
                                 </div>
@@ -304,8 +319,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                         )}
 
                         {/* Quiz Section */}
-                        {currentLesson.quiz && !currentLesson.completed && currentLesson.unlocked !== false && (
-                            <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-6 sm:p-8 mt-12">
+                        {currentLesson.quiz && !currentLesson.completed && isLessonUnlockedFn(activeLesson!.chap, activeLesson!.less) && (                            <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-6 sm:p-8 mt-12">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="bg-blue-100 p-2 rounded-lg">
                                         <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
