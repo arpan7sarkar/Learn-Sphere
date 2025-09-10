@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import axios from 'axios';
-import API_ENDPOINTS from './config/api';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { 
   ModernDashboard, 
@@ -83,7 +82,7 @@ const LearnSphereApp: React.FC = () => {
     // Function to load user XP data from backend
     const loadUserXP = async (userId: string) => {
         try {
-            const response = await axios.get(API_ENDPOINTS.GET_USER_XP(userId));
+            const response = await axios.get(`http://localhost:5001/api/xp/${userId}`);
             const xpData = response.data as {
                 totalXP: number;
                 currentLevel: number;
@@ -142,7 +141,7 @@ const LearnSphereApp: React.FC = () => {
         setIsLoading(true);
         setFetchError(null);
         try {
-            const response = await axios.get<Course[]>(`${API_ENDPOINTS.COURSES}?userId=${clerkUser.id}`);
+            const response = await axios.get<Course[]>(`http://localhost:5001/api/courses?userId=${clerkUser.id}`);
             const initialCourses = response.data.map(c => ({ 
                 ...c, 
                 id: c._id || c.id, 
@@ -171,7 +170,7 @@ const LearnSphereApp: React.FC = () => {
         if (!clerkUser?.id) return;
         
         try {
-            await axios.delete(API_ENDPOINTS.DELETE_COURSE(courseId, clerkUser.id));
+            await axios.delete(`http://localhost:5001/api/courses/${courseId}?userId=${clerkUser.id}`);
             
             // Remove the course from the local state
             setCourses(prev => prev.filter(course => course.id !== courseId));
@@ -213,7 +212,7 @@ const LearnSphereApp: React.FC = () => {
             }));
         } else {
             // Add XP for lesson completion via backend
-            await axios.post(API_ENDPOINTS.COMPLETE_LESSON, {
+            await axios.post('http://localhost:5001/api/lesson/complete', {
                 userId: clerkUser.id,
                 lessonId: `${courseId}_${chapterIndex}_${lessonIndex}`,
                 courseId: courseId,
