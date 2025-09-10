@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ user, onMenuToggle }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-           {/* Logo */}
+            {/* Logo */}
             <div className="flex-shrink-0">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300 border border-white/20">
                 <img src="/favicon.png" alt="Logo" className="w-full h-full object-cover rounded-xl" />
