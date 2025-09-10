@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Lock, CheckCircle, PartyPopper } from 'lucide-react';
+import type { Course, QuizResult, QuizProgress } from './index';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
-import type { Course, QuizResult, QuizProgress } from './index';
 
 interface QuizCompletionResponse {
   message: string;
@@ -178,11 +179,11 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                                         ? 'bg-green-100 text-green-700'
                                         : 'bg-blue-100 text-blue-700'
                                 }`}>
-                                    {isChapterLocked ? '🔒' : chapIdx + 1}
+                                    {isChapterLocked ? <Lock className="w-3 h-3" /> : chapIdx + 1}
                                 </span>
                                 {chap.title}
                                 {isChapterCompleted && (
-                                    <span className="text-green-500 text-sm">✓</span>
+                                    <CheckCircle className="w-4 h-4 text-green-500" />
                                 )}
                             </h4>
                             {isChapterLocked && (
@@ -425,7 +426,10 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                                                     <div>
                                                         {quizResponse.chapterCompleted ? (
                                                             <div>
-                                                                <p className="text-green-700 mb-2 font-medium">🎉 Chapter Completed!</p>
+                                                                <div className="flex items-center gap-2 text-green-700 mb-2 font-medium">
+                                                                    <PartyPopper className="w-5 h-5" />
+                                                                    <span>Chapter Completed!</span>
+                                                                </div>
                                                                 <p className="text-green-600 mb-4 text-sm">
                                                                     You've mastered all lessons in this chapter. Next chapter is now unlocked!
                                                                 </p>
@@ -455,7 +459,10 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
                                                             </div>
                                                         ) : (
                                                             <div>
-                                                                <p className="text-green-700 mb-4 font-medium">🎉 Congratulations! Next lesson unlocked!</p>
+                                                                <div className="flex items-center gap-2 text-green-700 mb-4 font-medium">
+                                                                    <PartyPopper className="w-5 h-5" />
+                                                                    <span>Congratulations! Next lesson unlocked!</span>
+                                                                </div>
                                                                 <button 
                                                                     onClick={handleContinue} 
                                                                     className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors w-full sm:w-auto"
