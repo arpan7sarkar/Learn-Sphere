@@ -7,4 +7,6 @@ export { EnhancedCourseCard } from './EnhancedCourseCard';
 export { Header } from './Header';
 export { Sidebar } from './Sidebar';
 export { ProgressBar } from './ProgressBar';
+export { BookmarkButton } from './BookmarkButton';
+export { BookmarkedCourses } from './BookmarkedCourses';
 export * from './types';

@@ -1,5 +1,5 @@
 // Shared TypeScript interfaces for the application
-export type View = 'dashboard' | 'generate' | 'learn' | 'profile';
+export type View = 'dashboard' | 'generate' | 'learn' | 'profile' | 'bookmarks';
 
 export interface ChatMessage { 
   role: 'user' | 'model'; 
@@ -7,6 +7,7 @@ export interface ChatMessage {
 }
 
 export interface User { 
+  id: string;
   name: string; 
   xp: number; 
   level: number; 
