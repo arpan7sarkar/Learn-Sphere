@@ -68,24 +68,49 @@
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Tech Stack
 
+<div align="center">
+
+### 🏛️ **System Architecture**
+
+```mermaid
+graph TB
+    A[React Frontend] --> B[Express API]
+    B --> C[MongoDB Atlas]
+    B --> D[Google Gemini AI]
+    A --> E[Clerk Auth]
+    B --> F[Course Generator]
+    F --> G[Content Parser]
+    G --> H[Quiz Engine]
 ```
-Learn-Sphere/
-├── 🎨 Frontend/          # React + TypeScript + TailwindCSS
-│   ├── src/
-│   │   ├── components/   # Reusable UI components
-│   │   ├── contexts/     # React contexts for state management
-│   │   └── assets/       # Static assets and images
-│   └── package.json
-├── ⚙️ Backend/           # Node.js + Express + MongoDB
-│   ├── routes/          # API endpoints and routing
-│   ├── models/          # MongoDB data models
-│   ├── schema/          # Validation schemas
-│   ├── config/          # Database and environment configuration
-│   └── app.js           # Express application entry point
-└── 📚 README.md         # You are here!
-```
+
+</div>
+
+### 🛠️ **Technology Stack**
+
+#### **Frontend** 
+- ⚛️ **React 18** with TypeScript for type-safe development
+- ⚡ **Vite** for lightning-fast build and development
+- 🎨 **Tailwind CSS** for modern, responsive styling
+- 🔐 **Clerk** for authentication and user management
+- 📡 **Axios** for API communication
+- 🎭 **Lucide React** for beautiful icons
+
+#### **Backend**
+- 🟢 **Node.js** with Express.js framework
+- 🍃 **MongoDB** with Mongoose ODM
+- 🤖 **Google Gemini AI** for content generation
+- 🔒 **JWT** for secure token management
+- 🌐 **CORS** for cross-origin resource sharing
+
+#### **Development & Deployment**
+- 📦 **npm/yarn** for package management
+- 🔧 **ESLint & Prettier** for code quality
+- 🚀 **Vercel/Netlify** ready deployment
+- 📊 **MongoDB Atlas** for cloud database
+
+---
 
 ---
 
@@ -253,7 +278,7 @@ This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) 
 
 - 🌐 GitHub: [@arpan7sarkar](https://github.com/arpan7sarkar)
 - 💼 LinkedIn: [Connect with me](https://linkedin.com/in/arpan7sarkar)
-- 📧 Email: arpan.sarkar@example.com
+- 📧 Email: contact.arpan.sarkar@gmail.com
 
 ---
 
@@ -272,7 +297,5 @@ This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) 
 ### 🌟 Star this repository if you found it helpful! 🌟
 
 **Made with ❤️ by [Arpan Sarkar](https://github.com/arpan7sarkar)**
-
-[🔝 Back to Top](#-learn-sphere)
 
 </div>
