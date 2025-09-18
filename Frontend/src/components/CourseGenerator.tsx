@@ -22,7 +22,7 @@ const CourseGenerator: React.FC<CourseGeneratorProps> = ({ onCourseCreated }) =>
         setIsLoading(true);
         setError(null);
         try {
-            const response = await axios.post<Course>('http://localhost:5001/api/generate-course', { 
+            const response = await axios.post<Course>('http://localhost:5001api/generate-course', { 
                 topic, 
                 level,
                 userId: clerkUser.id 
