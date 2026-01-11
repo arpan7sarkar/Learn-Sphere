@@ -1,8 +1,7 @@
 const express = require('express');
-const axios = require('axios');
+const { GoogleGenAI } = require("@google/genai");
 const router = express.Router();
 require('dotenv').config();
-
 
 router.post('/chat', async (req, res) => {
     const { message, history } = req.body;
@@ -14,19 +13,34 @@ router.post('/chat', async (req, res) => {
     if (!GEMINI_API_KEY) {
         return res.status(500).json({ message: 'API Key not configured on server.' });
     }
+
+    const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+    const systemInstruction = { parts: [{ text: "You are LearnSphere Tutor, a friendly and encouraging AI assistant. You help students with their coursework, explain concepts in simple terms, and provide study tips. Keep answers concise and helpful." }] };
     
-    const systemInstruction = { parts: [{ text: "You are LearnSphere Tutor, a friendly and encouraging AI assistant..." }] };
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+    // Ensure history is correctly formatted for the SDK
     const contents = [...(history || []), { role: 'user', parts: [{ text: message }] }];
 
     try {
-        const response = await axios.post(API_URL, { contents, systemInstruction });
-        const chatResponse = response.data.candidates[0].content.parts[0].text;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: contents,
+            config: {
+                systemInstruction: systemInstruction
+            }
+        });
+
+        const chatResponse = response.text;
         res.status(200).json({ reply: chatResponse });
     } catch (error) {
-        const errorMessage = error.response ? error.response.data.error.message : error.message;
+        // Enhance error logging
+        const errorMessage = error.response ? JSON.stringify(error.response) : error.message;
         console.error("Error with Gemini Chat API:", errorMessage);
+        
+        // Log additional details if available
+        if (error.status) console.error("Status:", error.status);
+        
         res.status(500).json({ message: 'Failed to get a response from the AI tutor.' });
     }
 });
+
 module.exports = router;
