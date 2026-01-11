@@ -27,7 +27,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
     setIsLoading(true); 
     
     try { 
-      const response = await axios.post<{ reply: string }>('http://localhost:5001/api/chat', { 
+      const response = await axios.post<{ reply: string }>('https://learn-sphere-backend-v2.vercel.app/api/chat', { 
         message: input, 
         history: messages 
       }); 

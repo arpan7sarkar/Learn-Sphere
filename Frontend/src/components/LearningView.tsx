@@ -82,7 +82,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
         quiz.questions.forEach((q, i) => { if (answers[i] === q.correctAnswer) { correct++; } });
         
         try {
-            const response = await axios.post<QuizCompletionResponse>('http://localhost:5001/api/quiz/complete', {
+            const response = await axios.post<QuizCompletionResponse>('https://learn-sphere-backend-v2.vercel.app/api/quiz/complete', {
                 userId: clerkUser.id,
                 courseId: course.id,
                 chapterIndex: activeLesson.chap,
@@ -130,7 +130,7 @@ const LearningView: React.FC<LearningViewProps> = ({ course, onMarkComplete, qui
         
         setIsRegeneratingQuiz(true);
         try {
-            await axios.post('http://localhost:5001/api/quiz/regenerate', {
+            await axios.post('https://learn-sphere-backend-v2.vercel.app/api/quiz/regenerate', {
                 userId: clerkUser.id,
                 courseId: course.id,
                 chapterIndex: activeLesson.chap,
